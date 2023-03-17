@@ -4,9 +4,10 @@ from bs4 import BeautifulSoup
 from numpy import sin, cos, arccos, pi, round
 import requests
 from bs4 import BeautifulSoup
+import os
 
-
-with open("/home/erkam/Files/Scraper/Telegram Bot/earthquake/cities.json", "r") as f:
+current_path = os.getcwd()
+with open(f"{current_path}/earthquake/cities.json", "r") as f:
     cities = json.load(f)
 
 

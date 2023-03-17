@@ -1,26 +1,24 @@
 
-from telegram.ext import CommandHandler, ContextTypes, MessageHandler, Filters, filters, Updater,CallbackContext
+from telegram.ext import CommandHandler, ContextTypes, MessageHandler, Filters, filters, Updater, CallbackContext
 from telegram import ForceReply, Update, ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 import os
 import shutil
 from dotenv import load_dotenv
 from responses import Response
-import re
 
 load_dotenv()
 
+""" VERSION = '13.7' """
+
 APIKEY = os.getenv("APIKey")
-CHATID = os.getenv("chatID")
 
 
 R = Response()
 
 
-      
 def start(update, source):
-
     """Send a message when the command /start is issued."""
-    
+
     user = update.effective_user
     result = f"Hi ! {user.first_name} {user.last_name} Welcome."
     update.message.reply_text(result, parse_mode=ParseMode.HTML)
@@ -32,18 +30,20 @@ def earthquake(update, source):
 
 
 def currency(update, source):
-    update.message.reply_text(f'<i>{R.currency()}</i>', parse_mode=ParseMode.HTML)
+    update.message.reply_text(
+        f'<i>{R.currency()}</i>', parse_mode=ParseMode.HTML)
 
 
 def standing(update, context):
-    update.message.reply_text(f"<pre>{R.standing()}</pre>", parse_mode=ParseMode.HTML)
+    update.message.reply_text(
+        f"<pre>{R.standing()}</pre>", parse_mode=ParseMode.HTML)
 
-def epic_robot(update, context): # Babür
+
+def epic_robot(update, context):  # Babür
 
     chat_id = update.effective_user.id
     epic_photo = open('epic_robot.jpg', 'rb')
     context.bot.send_photo(chat_id=chat_id, photo=epic_photo)
-
 
 
 def handle_message(update, context):
@@ -65,9 +65,11 @@ def handle_message(update, context):
     if text.startswith("-audio/https://youtu.be") or text.startswith("-audio/https://www.youtube.com"):
         url = normal_text.split("-audio/")[1]
         R.send_media(URL=url, chat_id=chat_id, type="audio")
-        update.message.reply_text("<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
+        update.message.reply_text(
+            "<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
         reply, title = R.reply_video_datas(URL=url, chat_id=chat_id)
-        update.message.reply_text(f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
+        update.message.reply_text(
+            f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
         f = open(f"{current_path}/youtube/audio/{str(chat_id)}/{title}.mp4", "rb")
         context.bot.send_audio(chat_id=chat_id, audio=f)
         try:
@@ -77,20 +79,18 @@ def handle_message(update, context):
 
     if text.startswith("-video/https://youtu.be") or text.startswith("-video/https://www.youtube.com"):
         url = normal_text.split("-video/")[1]
-        update.message.reply_text("<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
+        update.message.reply_text(
+            "<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
         R.send_media(URL=url, chat_id=chat_id, type="video")
         reply, title = R.reply_video_datas(URL=url, chat_id=chat_id)
-        update.message.reply_text(f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
+        update.message.reply_text(
+            f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
         f = open(f"{current_path}/youtube/video/{str(chat_id)}/{title}.mp4", "rb")
         context.bot.send_video(chat_id=chat_id, video=f)
         try:
             shutil.rmtree(f"{current_path}/youtube/video/{str(chat_id)}")
         except FileNotFoundError:
             pass
-
-        
-        
-        
 
 
 def main():
@@ -105,15 +105,12 @@ def main():
     disp.add_handler(CommandHandler("ensar", epic_robot))
     disp.add_handler(MessageHandler(Filters.text, handle_message))
 
-
-
     update.start_polling()
     update.idle()
 
+
 if __name__ == "__main__":
-   main()
-
-
+    main()
 
 
 """ 

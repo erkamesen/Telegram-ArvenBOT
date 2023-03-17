@@ -3,7 +3,7 @@ from github.github import Follow
 from standings.standing import standing_list
 from currency.currency import currency_reply
 from youtube.youtube import YT
-import shutil
+
 
 class Response:
 
@@ -86,7 +86,6 @@ Enlem: {earthquake.latitude} - Boylam: {earthquake.longitude}\nŞiddet: {earthqu
         """
         yt = YT(URL=URL, chat_id=chat_id)
         if type == "video":
-            print("geldi")
             yt.video_downloader()
         else:
             yt.audio_downloader()

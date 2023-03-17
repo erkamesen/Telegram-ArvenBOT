@@ -72,7 +72,7 @@ class LOL:
 
 
 
+if __name__ == "__main__":
+    lol = LOL("MANTARIMA BASMA")
 
-lol = LOL("MANTARIMA BASMA")
-
-print(lol.stats)
+    print(lol.stats)

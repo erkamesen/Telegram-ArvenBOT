@@ -13,6 +13,7 @@ class YT():
 
     def video_downloader(self):
         downloader = YouTube(self.URL)
+        os.chdir(self.current_path)
         os.chdir(f"{self.current_path}/youtube/video")
         try:
             os.mkdir(str(self.chat_id))
@@ -23,13 +24,14 @@ class YT():
 
     def audio_downloader(self):
         downloader = YouTube(self.URL)
+        os.chdir(self.current_path)
         os.chdir(f"{self.current_path}/youtube/audio")
         try:
             os.mkdir(str(self.chat_id))
         except FileExistsError:
             pass
         downloader.streams.filter(mime_type="audio/mp4").first().download(
-            output_path=f"{self.current_path}/youtube/audio/{str(self.chat_id)}", filename=f"{self.title}.mp3")
+            output_path=f"{self.current_path}/youtube/audio/{str(self.chat_id)}", filename=f"{self.title}.mp4")
     
 
     def video_context(self):

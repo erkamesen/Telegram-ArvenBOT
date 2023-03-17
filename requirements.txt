@@ -1,0 +1,8 @@
+beautifulsoup4==4.11.2
+numpy==1.24.2
+python-dotenv==1.0.0
+python_telegram_bot==13.7
+pytube==12.1.2
+requests==2.25.1
+selenium==4.8.2
+telegram==0.0.1
