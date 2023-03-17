@@ -2,6 +2,7 @@
 from telegram.ext import CommandHandler, ContextTypes, MessageHandler, Filters, filters, Updater,CallbackContext
 from telegram import ForceReply, Update, ParseMode, ReplyKeyboardMarkup, ReplyKeyboardRemove, InlineKeyboardButton, InlineKeyboardMarkup
 import os
+import shutil
 from dotenv import load_dotenv
 from responses import Response
 import re
@@ -46,6 +47,7 @@ def epic_robot(update, context): # Babür
 
 
 def handle_message(update, context):
+    current_path = os.getcwd()
     text = str(update.message.text).lower()
     normal_text = str(update.message.text)
     chat_id = update.effective_user.id
@@ -62,13 +64,33 @@ def handle_message(update, context):
 
     if text.startswith("-audio/https://youtu.be") or text.startswith("-audio/https://www.youtube.com"):
         url = normal_text.split("-audio/")[1]
-        R.send_audio(URL=url)
-        update.message.reply_text("İndirildi", parse_mode=ParseMode.HTML)
-    
+        R.send_media(URL=url, chat_id=chat_id, type="audio")
+        update.message.reply_text("<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
+        reply, title = R.reply_video_datas(URL=url, chat_id=chat_id)
+        update.message.reply_text(f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
+        f = open(f"{current_path}/youtube/audio/{str(chat_id)}/{title}.mp4", "rb")
+        context.bot.send_audio(chat_id=chat_id, audio=f)
+        try:
+            shutil.rmtree(f"{current_path}/youtube/audio/{str(chat_id)}")
+        except FileNotFoundError:
+            pass
 
+    if text.startswith("-video/https://youtu.be") or text.startswith("-video/https://www.youtube.com"):
+        url = normal_text.split("-video/")[1]
+        update.message.reply_text("<pre><b>Downloading 🤟🤟</b></pre>", parse_mode=ParseMode.HTML)
+        R.send_media(URL=url, chat_id=chat_id, type="video")
+        reply, title = R.reply_video_datas(URL=url, chat_id=chat_id)
+        update.message.reply_text(f"<pre><i>{reply}</i></pre>", parse_mode=ParseMode.HTML)
+        f = open(f"{current_path}/youtube/video/{str(chat_id)}/{title}.mp4", "rb")
+        context.bot.send_video(chat_id=chat_id, video=f)
+        try:
+            shutil.rmtree(f"{current_path}/youtube/video/{str(chat_id)}")
+        except FileNotFoundError:
+            pass
 
-    
-
+        
+        
+        
 
 
 def main():
