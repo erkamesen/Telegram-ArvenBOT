@@ -2,7 +2,7 @@ from earthquake.fetch_earthquake import earthquake_list, getDistanceBetweenPoint
 from github.github import Follow
 from standings.standing import standing_list
 from currency.currency import currency_reply
-
+from youtube.youtube import YT
 class Response:
 
 
@@ -22,7 +22,7 @@ Enlem: {earthquake.latitude} - Boylam: {earthquake.longitude}\nŞiddet: {earthqu
         return reply
             
     def standing(self):
-        reply = "Club              MP  W   D   L  GD"
+        reply = "Club              W   D   L  GD"
         for team in standing_list:
             club_name = team[1]                   
             reply += "\n"+team[0]+"-"+club_name+(" "*(17-(len(club_name)+len(str(team[0])))))+team[5]+"   "+team[6]+"   "+team[7]+"    "+team[10]
@@ -61,6 +61,10 @@ Enlem: {earthquake.latitude} - Boylam: {earthquake.longitude}\nŞiddet: {earthqu
         commandHandler = /currency
         """
         return currency_reply
+    
+    def send_audio(self, URL):
+        yt = YT(URL=URL)
+        yt.audio_downloader()
         
     
     
