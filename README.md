@@ -18,7 +18,7 @@
 - -video/< YouTubeLink >
 - -github/< username >
 - -lolstats/< username > - - Loading ⏳⏳
-- -lyric/< song > - - Loading ⏳⏳
+- -lyric/< songName > - - Loading ⏳⏳
 - -recipe/< mealName > - - Loading ⏳⏳
 - -matches/< teamName > - - Loading ⏳⏳
 
