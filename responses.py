@@ -3,6 +3,7 @@ from github.github import Follow
 from standings.standing import standing_list
 from currency.currency import currency_reply
 from youtube.youtube import YT
+from ramadan.iftar_sehri import Ramadan
 
 
 class Response:
@@ -89,6 +90,16 @@ Enlem: {earthquake.latitude} - Boylam: {earthquake.longitude}\nŞiddet: {earthqu
             yt.video_downloader()
         else:
             yt.audio_downloader()
+
+    def send_ramadan_infos(self, city):
+        """
+        messageHandler = -ramadan/<cityName>
+        """
+        tracker = Ramadan(city=city)
+        r = tracker.responses()
+        return f"To iftar: {r['to_iftar']}\nTo sehri: {r['to_sehri']}"
+    
+
 
 
 

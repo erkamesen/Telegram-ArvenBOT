@@ -92,6 +92,13 @@ def handle_message(update, context):
         except FileNotFoundError:
             pass
 
+    if text.startswith("-ramadan/"):
+        city = text.split("/")[1]
+        reply = R.send_ramadan_infos(city=city)
+        update.message.reply_text(reply)
+
+
+
 
 def main():
 
